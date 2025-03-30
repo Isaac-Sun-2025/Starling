@@ -71,13 +71,31 @@ transition: opacity 0.3s ease;
 opacity: 0;
 pointer-events: none;
 }
+@keyframes pulse {
+0% { opacity: 1; }
+50% { opacity: 0.5; }
+100% { opacity: 1; }
+}
+.sync-indicator {
+animation: pulse 2s infinite;
+}
+.sync-notification {
+animation: slideIn 0.3s forwards;
+}
+@keyframes slideIn {
+from { transform: translate(-50%, 100%); opacity: 0; }
+to { transform: translate(-50%, 0); opacity: 1; }
+}
 </style>
 </head>
 <body class="bg-black text-white min-h-screen w-[375px] mx-auto overflow-x-hidden">
 <div class="desktop-view p-4">
 <header class="flex justify-between items-center mb-6">
 <h1 class="text-2xl font-['Pacifico']">FlashWatch</h1>
-<div class="sync-status text-sm text-primary">Last synced: Just now</div>
+<div class="sync-status text-sm text-primary flex items-center">
+  <span>Last synced: Just now</span>
+  <i class="ri-wifi-line ml-1"></i>
+</div>
 </header>
 <div class="grid grid-cols-2 gap-4">
 <div class="deck-list space-y-4">
@@ -117,6 +135,12 @@ pointer-events: none;
 </div>
 </div>
 <div class="watch-view h-screen flex flex-col">
+<div class="flex items-center justify-end p-2">
+  <div class="sync-status-watch text-xs text-primary flex items-center">
+    <span>Connected</span>
+    <i class="ri-wifi-line ml-1 sync-indicator"></i>
+  </div>
+</div>
 <div class="flex-1 relative">
 <div class="absolute inset-0 flex items-center">
 <button class="prev-card w-1/3 h-full flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity">
@@ -159,6 +183,7 @@ pointer-events: none;
 <button id="cancel-edit" class="flex-1 py-2 bg-gray-600 text-white !rounded-button">Cancel</button>
 <button id="save-edit" class="flex-1 py-2 bg-primary text-white !rounded-button">Save</button>
 </div>
+<div class="text-xs text-center mt-2 text-gray-400">Changes will sync across all devices</div>
 </div>
 </div>
 </div>
@@ -169,9 +194,9 @@ decks: [
 {
 name: "Spanish Vocabulary",
 cards: [
-{ term: "Hola", definition: "Hello" },
-{ term: "Gracias", definition: "Thank you" },
-{ term: "Por favor", definition: "Please" }
+{ id: "card1", term: "Hola", definition: "Hello" },
+{ id: "card2", term: "Gracias", definition: "Thank you" },
+{ id: "card3", term: "Por favor", definition: "Please" }
 ]
 }
 ]
@@ -187,64 +212,184 @@ const editTerm = document.getElementById('edit-term');
 const editDefinition = document.getElementById('edit-definition');
 const cancelEditBtn = document.getElementById('cancel-edit');
 const saveEditBtn = document.getElementById('save-edit');
+const syncStatusElement = document.querySelector('.sync-status');
+// Setup WebSocket connection
+const socket = new WebSocket('wss://echo.websocket.org'); // In a real app, use your actual WebSocket server
+let isConnected = false;
+socket.onopen = () => {
+  isConnected = true;
+  updateSyncStatus('Connected');
+  console.log('WebSocket connection established');
+};
+socket.onclose = () => {
+  isConnected = false;
+  updateSyncStatus('Disconnected');
+  console.log('WebSocket connection closed');
+  
+  // Try to reconnect after 5 seconds
+  setTimeout(() => {
+    if (!isConnected) {
+      updateSyncStatus('Reconnecting...');
+      // In a real implementation, you would recreate the socket here
+    }
+  }, 5000);
+};
+socket.onerror = (error) => {
+  console.error('WebSocket error:', error);
+  updateSyncStatus('Connection error');
+};
+socket.onmessage = (event) => {
+  try {
+    const data = JSON.parse(event.data);
+    
+    if (data.type === 'card_update') {
+      // Find and update the card
+      const deck = mockData.decks[data.deckIndex];
+      if (deck) {
+        const cardIndex = deck.cards.findIndex(card => card.id === data.card.id);
+        if (cardIndex !== -1) {
+          deck.cards[cardIndex] = data.card;
+          
+          // If we're currently viewing this card, update the display
+          if (currentDeckIndex === data.deckIndex && currentCardIndex === cardIndex) {
+            updateCard();
+          }
+          
+          // Update desktop view if needed
+          updateDesktopCardPreview(data.card);
+          
+          // Show sync notification
+          showSyncNotification('Card updated from another device');
+        }
+      }
+    }
+    
+    updateSyncStatus('Last synced: Just now');
+  } catch (error) {
+    console.error('Error processing message:', error);
+  }
+};
+function sendCardUpdate(card) {
+  if (isConnected) {
+    const updateData = {
+      type: 'card_update',
+      deckIndex: currentDeckIndex,
+      card: card
+    };
+    
+    socket.send(JSON.stringify(updateData));
+    updateSyncStatus('Last synced: Just now');
+  } else {
+    updateSyncStatus('Not connected - changes not synced');
+    showSyncNotification('Not connected - changes saved locally only', 'warning');
+  }
+}
+function updateSyncStatus(message) {
+  if (syncStatusElement) {
+    syncStatusElement.textContent = message;
+  }
+}
+function showSyncNotification(message, type = 'success') {
+  const notification = document.createElement('div');
+  notification.className = `fixed bottom-16 left-1/2 transform -translate-x-1/2 py-2 px-4 rounded-full text-sm z-20 ${type === 'warning' ? 'bg-yellow-500' : 'bg-primary'} text-white`;
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+function updateDesktopCardPreview(updatedCard) {
+  const desktopCards = document.querySelector('.desktop-view .cards');
+  if (desktopCards) {
+    const cardElements = desktopCards.querySelectorAll('.card');
+    cardElements.forEach(cardElement => {
+      const termElement = cardElement.querySelector('p.font-bold');
+      const definitionElement = cardElement.querySelector('p.text-sm');
+      
+      if (termElement && termElement.textContent === updatedCard.term) {
+        termElement.textContent = updatedCard.term;
+        definitionElement.textContent = updatedCard.definition;
+      }
+    });
+  }
+}
 flashcard.addEventListener('click', () => {
-flashcard.classList.toggle('flipped');
+  flashcard.classList.toggle('flipped');
 });
 prevBtn.addEventListener('click', () => {
-if (currentCardIndex > 0) {
-currentCardIndex--;
-updateCard();
-}
+  if (currentCardIndex > 0) {
+    currentCardIndex--;
+    updateCard();
+  }
 });
 nextBtn.addEventListener('click', () => {
-if (currentCardIndex < mockData.decks[currentDeckIndex].cards.length - 1) {
-currentCardIndex++;
-updateCard();
-}
+  if (currentCardIndex < mockData.decks[currentDeckIndex].cards.length - 1) {
+    currentCardIndex++;
+    updateCard();
+  }
 });
 editBtn.addEventListener('click', () => {
-const card = mockData.decks[currentDeckIndex].cards[currentCardIndex];
-editTerm.value = card.term;
-editDefinition.value = card.definition;
-editModal.classList.remove('hidden');
+  const card = mockData.decks[currentDeckIndex].cards[currentCardIndex];
+  editTerm.value = card.term;
+  editDefinition.value = card.definition;
+  editModal.classList.remove('hidden');
 });
 cancelEditBtn.addEventListener('click', () => {
-editModal.classList.add('hidden');
+  editModal.classList.add('hidden');
 });
 saveEditBtn.addEventListener('click', () => {
-const card = mockData.decks[currentDeckIndex].cards[currentCardIndex];
-card.term = editTerm.value;
-card.definition = editDefinition.value;
-updateCard();
-editModal.classList.add('hidden');
+  const card = mockData.decks[currentDeckIndex].cards[currentCardIndex];
+  card.term = editTerm.value;
+  card.definition = editDefinition.value;
   
-// Show save confirmation
-const saveConfirm = document.createElement('div');
-saveConfirm.className = 'fixed bottom-16 left-1/2 transform -translate-x-1/2 bg-primary text-white py-2 px-4 rounded-full text-sm';
-saveConfirm.textContent = 'Card updated successfully';
-document.body.appendChild(saveConfirm);
-setTimeout(() => {
-  saveConfirm.remove();
-}, 2000);
+  // Update local UI
+  updateCard();
+  editModal.classList.add('hidden');
+  
+  // Send update to other devices
+  sendCardUpdate(card);
+  
+  // Show save confirmation
+  showSyncNotification('Card updated successfully');
 });
 function updateCard() {
-const card = mockData.decks[currentDeckIndex].cards[currentCardIndex];
-document.querySelector('.flashcard-front p').textContent = card.term;
-document.querySelector('.flashcard-back p').textContent = card.definition;
-flashcard.classList.remove('flipped');
-updateProgressDots();
+  const card = mockData.decks[currentDeckIndex].cards[currentCardIndex];
+  document.querySelector('.flashcard-front p').textContent = card.term;
+  document.querySelector('.flashcard-back p').textContent = card.definition;
+  flashcard.classList.remove('flipped');
+  updateProgressDots();
 }
 function updateProgressDots() {
-const totalCards = mockData.decks[currentDeckIndex].cards.length;
-const dotsContainer = document.querySelector('.progress-dots');
-dotsContainer.innerHTML = '';
-for (let i = 0; i < totalCards; i++) {
-const dot = document.createElement('div');
-dot.className = `w-1 h-1 rounded-full ${i === currentCardIndex ? 'bg-primary' : 'bg-gray-600'}`;
-dotsContainer.appendChild(dot);
+  const totalCards = mockData.decks[currentDeckIndex].cards.length;
+  const dotsContainer = document.querySelector('.progress-dots');
+  dotsContainer.innerHTML = '';
+  for (let i = 0; i < totalCards; i++) {
+    const dot = document.createElement('div');
+    dot.className = `w-1 h-1 rounded-full ${i === currentCardIndex ? 'bg-primary' : 'bg-gray-600'}`;
+    dotsContainer.appendChild(dot);
+  }
 }
-}
+// Initialize
 updateCard();
+// Simulate receiving updates from other devices (for demo purposes)
+setTimeout(() => {
+  const simulatedUpdate = {
+    type: 'card_update',
+    deckIndex: 0,
+    card: { 
+      id: "card1", 
+      term: "Hola", 
+      definition: "Hello (updated from another device)" 
+    }
+  };
+  
+  const event = { 
+    data: JSON.stringify(simulatedUpdate) 
+  };
+  
+  socket.onmessage(event);
+}, 10000);
 </script>
 </body>
 </html>
