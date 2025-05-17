@@ -1,721 +1,1002 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoboSchoolies - FIRST Robotics Competition Team</title>
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>tailwind.config={theme:{extend:{colors:{primary:'#0066cc',secondary:'#ff6b00'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        :where([class^="ri-"])::before { content: "\f3c2"; }
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .counter-value {
-            transition: all 0.5s ease;
-        }
-        input:focus {
-            outline: none;
-        }
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.5rem center;
-            background-size: 1.5em 1.5em;
-        }
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United Federation of Starlings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2C3E50',secondary:'#FFB74D'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Roboto', sans-serif;
+color: #2C3E50;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Montserrat', sans-serif;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.tab-active {
+color: #2C3E50;
+border-bottom: 2px solid #2C3E50;
+}
+.custom-checkbox {
+display: inline-block;
+position: relative;
+padding-left: 30px;
+cursor: pointer;
+}
+.custom-checkbox input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+}
+.checkmark {
+position: absolute;
+top: 0;
+left: 0;
+height: 20px;
+width: 20px;
+background-color: #fff;
+border: 2px solid #E8F0F8;
+border-radius: 4px;
+}
+.custom-checkbox input:checked ~ .checkmark {
+background-color: #2C3E50;
+border-color: #2C3E50;
+}
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+display: block;
+}
+.custom-checkbox .checkmark:after {
+left: 6px;
+top: 2px;
+width: 5px;
+height: 10px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+.switch {
+position: relative;
+display: inline-block;
+width: 50px;
+height: 24px;
+}
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #E8F0F8;
+transition: .4s;
+border-radius: 34px;
+}
+.slider:before {
+position: absolute;
+content: "";
+height: 18px;
+width: 18px;
+left: 4px;
+bottom: 3px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+input:checked + .slider {
+background-color: #2C3E50;
+}
+input:checked + .slider:before {
+transform: translateX(24px);
+}
+.range-slider {
+-webkit-appearance: none;
+width: 100%;
+height: 8px;
+border-radius: 5px;
+background: #E8F0F8;
+outline: none;
+}
+.range-slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background: #2C3E50;
+cursor: pointer;
+}
+.range-slider::-moz-range-thumb {
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background: #2C3E50;
+cursor: pointer;
+}
+.starling-logo {
+position: relative;
+width: 40px;
+height: 40px;
+}
+.starling-logo::before,
+.starling-logo::after {
+content: '';
+position: absolute;
+background: #2C3E50;
+}
+.starling-logo::before {
+width: 24px;
+height: 30px;
+border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+transform: rotate(-20deg);
+left: 8px;
+top: 5px;
+}
+.starling-logo::after {
+width: 12px;
+height: 15px;
+border-radius: 50%;
+right: 6px;
+top: 3px;
+}
+</style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header Section -->
-    <header class="w-full bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-['Pacifico'] text-primary">RoboSchoolies</a>
-            
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="#" class="text-gray-900 font-medium hover:text-primary transition">Home</a>
-                <a href="#about" class="text-gray-600 hover:text-primary transition">About Us</a>
-                <a href="#robots" class="text-gray-600 hover:text-primary transition">Our Robots</a>
-                <a href="#sponsors" class="text-gray-600 hover:text-primary transition">Sponsors</a>
-                <a href="#contact" class="text-gray-600 hover:text-primary transition">Contact</a>
-            </nav>
-            
-            <a href="#sponsors" class="hidden md:block bg-primary text-white px-6 py-2 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">Support Us</a>
-            
-            <button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700">
-                <i class="ri-menu-line ri-lg"></i>
-            </button>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="relative w-full" style="background-image: url('https://public.readdy.ai/ai/img_res/e189c33e684749a627742f3827b4381a.jpg'); background-size: cover; background-position: center right;">
-        <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent"></div>
-        <div class="container mx-auto px-4 py-24 md:py-32 lg:py-40 relative">
-            <div class="w-full max-w-2xl text-white">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">Innovating Tomorrow Through Robotics</h1>
-                <p class="text-lg md:text-xl mb-8 text-white/90">We're a passionate team of high school students competing in the FIRST Robotics Competition, building skills and robots that change the world.</p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#about" class="bg-white text-primary px-8 py-3 !rounded-button font-semibold hover:bg-gray-100 transition whitespace-nowrap">Learn More</a>
-                    <a href="#sponsors" class="bg-transparent border-2 border-white text-white px-8 py-3 !rounded-button font-semibold hover:bg-white/10 transition whitespace-nowrap">Become a Sponsor</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Overview Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Meet RoboSchoolies</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto">A team of innovative minds pushing the boundaries of robotics in the FIRST Robotics Competition since 2018.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4 text-primary">Our Mission</h3>
-                    <p class="text-gray-700 mb-6">RoboSchoolies is dedicated to inspiring students to pursue careers in STEM through hands-on experience in robotics engineering, programming, and business management. We believe in fostering innovation, teamwork, and leadership skills that extend beyond the competition floor.</p>
-                    
-                    <h3 class="text-2xl font-bold mb-4 text-primary">Our Vision</h3>
-                    <p class="text-gray-700 mb-6">We aim to create a sustainable program that provides equal opportunities for all students to engage with cutting-edge technology, develop professional skills, and build connections with industry leaders.</p>
-                    
-                    <div class="flex flex-wrap gap-4 mt-8">
-                        <a href="#contact" class="bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">Join Our Team</a>
-                        <a href="#robots" class="text-primary border border-primary px-6 py-3 !rounded-button font-medium hover:bg-primary/5 transition whitespace-nowrap">See Our Robots</a>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm text-center">
-                        <div class="text-4xl font-bold text-primary mb-2 counter-value">7</div>
-                        <p class="text-gray-600">Years Active</p>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm text-center">
-                        <div class="text-4xl font-bold text-primary mb-2 counter-value">12</div>
-                        <p class="text-gray-600">Awards Won</p>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm text-center">
-                        <div class="text-4xl font-bold text-primary mb-2 counter-value">35</div>
-                        <p class="text-gray-600">Team Members</p>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm text-center">
-                        <div class="text-4xl font-bold text-primary mb-2 counter-value">18</div>
-                        <p class="text-gray-600">Sponsors</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FIRST Robotics Competition Section -->
-    <section id="robots" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">FIRST Robotics Competition</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto">The ultimate Sport for the Mind™ where teams design, build, and program industrial-size robots to play a challenging field game in alliance with other teams.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-                <div class="order-2 lg:order-1">
-                    <h3 class="text-2xl font-bold mb-4 text-primary">2025 Challenge: Charged Up</h3>
-                    <p class="text-gray-700 mb-6">This year's game challenges teams to design robots that can efficiently collect and place game pieces on a complex playing field, while navigating balance challenges and defensive opponents.</p>
-                    
-                    <div class="space-y-4 mb-8">
-                        <div class="flex items-start">
-                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4 mt-1">
-                                <i class="ri-timer-line ri-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-900">Build Season: January - February 2025</h4>
-                                <p class="text-gray-600">Six weeks to design, build, and program our competition robot</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4 mt-1">
-                                <i class="ri-trophy-line ri-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-900">Regional Competitions: March 2025</h4>
-                                <p class="text-gray-600">Competing in the Pacific Northwest and Silicon Valley Regionals</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4 mt-1">
-                                <i class="ri-flag-line ri-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-900">World Championship: April 2025</h4>
-                                <p class="text-gray-600">Our goal is to qualify for the FIRST Championship in Houston</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="order-1 lg:order-2">
-                    <img src="https://public.readdy.ai/ai/img_res/6e843bc238c76886c5820a63014eb0be.jpg" alt="FIRST Robotics Competition" class="w-full h-auto rounded-lg shadow-md object-cover object-top">
-                </div>
-            </div>
-
-            <div class="bg-white p-8 rounded-lg shadow-sm">
-                <h3 class="text-2xl font-bold mb-6 text-center">Our Previous Achievements</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="border border-gray-100 p-6 rounded-lg hover:shadow-md transition">
-                        <div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary mb-4">
-                            <i class="ri-award-line ri-lg"></i>
-                        </div>
-                        <h4 class="font-bold text-lg mb-2">Regional Winners</h4>
-                        <p class="text-gray-600">2024 Pacific Northwest Regional</p>
-                    </div>
-                    
-                    <div class="border border-gray-100 p-6 rounded-lg hover:shadow-md transition">
-                        <div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary mb-4">
-                            <i class="ri-tools-line ri-lg"></i>
-                        </div>
-                        <h4 class="font-bold text-lg mb-2">Excellence in Engineering</h4>
-                        <p class="text-gray-600">2023 Silicon Valley Regional</p>
-                    </div>
-                    
-                    <div class="border border-gray-100 p-6 rounded-lg hover:shadow-md transition">
-                        <div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary mb-4">
-                            <i class="ri-team-line ri-lg"></i>
-                        </div>
-                        <h4 class="font-bold text-lg mb-2">Team Spirit Award</h4>
-                        <p class="text-gray-600">2022 World Championship</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sponsorship Opportunities -->
-    <section id="sponsors" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Sponsorship Opportunities</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto">Partner with us to inspire the next generation of engineers, programmers, and business leaders while gaining visibility for your organization.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                <div class="bg-gray-50 rounded-lg p-8 shadow-sm border border-gray-100 flex flex-col">
-                    <h3 class="text-xl font-bold mb-2">Bronze Sponsor</h3>
-                    <div class="text-3xl font-bold text-primary mb-6">$1,000+</div>
-                    <ul class="space-y-3 mb-8 flex-grow">
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Logo on team website</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Social media recognition</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Team thank you plaque</span>
-                        </li>
-                    </ul>
-                    <a href="#contact" class="bg-white border border-primary text-primary px-6 py-3 !rounded-button font-medium hover:bg-primary/5 transition text-center whitespace-nowrap">Become a Sponsor</a>
-                </div>
-                
-                <div class="bg-primary/5 rounded-lg p-8 shadow-md border border-primary/20 flex flex-col relative">
-                    <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
-                    <h3 class="text-xl font-bold mb-2">Silver Sponsor</h3>
-                    <div class="text-3xl font-bold text-primary mb-6">$5,000+</div>
-                    <ul class="space-y-3 mb-8 flex-grow">
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">All Bronze benefits</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Logo on team t-shirts</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Logo on competition robot</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Team demonstration at your location</span>
-                        </li>
-                    </ul>
-                    <a href="#contact" class="bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-primary/90 transition text-center whitespace-nowrap">Become a Sponsor</a>
-                </div>
-                
-                <div class="bg-gray-50 rounded-lg p-8 shadow-sm border border-gray-100 flex flex-col">
-                    <h3 class="text-xl font-bold mb-2">Gold Sponsor</h3>
-                    <div class="text-3xl font-bold text-primary mb-6">$10,000+</div>
-                    <ul class="space-y-3 mb-8 flex-grow">
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">All Silver benefits</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Premium logo placement</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">VIP invitations to competitions</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-primary mr-2 mt-0.5">
-                                <i class="ri-check-line"></i>
-                            </div>
-                            <span class="text-gray-700">Mentorship opportunities</span>
-                        </li>
-                    </ul>
-                    <a href="#contact" class="bg-white border border-primary text-primary px-6 py-3 !rounded-button font-medium hover:bg-primary/5 transition text-center whitespace-nowrap">Become a Sponsor</a>
-                </div>
-            </div>
-
-            <div class="bg-gray-50 rounded-lg p-8 shadow-sm">
-                <h3 class="text-2xl font-bold mb-8 text-center">Our Current Sponsors</h3>
-                
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto flex items-center justify-center text-gray-700 mb-2">
-                            <i class="ri-microsoft-fill ri-3x"></i>
-                        </div>
-                        <p class="text-sm font-medium">Microsoft</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto flex items-center justify-center text-gray-700 mb-2">
-                            <i class="ri-google-fill ri-3x"></i>
-                        </div>
-                        <p class="text-sm font-medium">Google</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto flex items-center justify-center text-gray-700 mb-2">
-                            <i class="ri-amazon-fill ri-3x"></i>
-                        </div>
-                        <p class="text-sm font-medium">Amazon</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto flex items-center justify-center text-gray-700 mb-2">
-                            <i class="ri-apple-fill ri-3x"></i>
-                        </div>
-                        <p class="text-sm font-medium">Apple</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto flex items-center justify-center text-gray-700 mb-2">
-                            <i class="ri-tesla-fill ri-3x"></i>
-                        </div>
-                        <p class="text-sm font-medium">Tesla</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto flex items-center justify-center text-gray-700 mb-2">
-                            <i class="ri-netflix-fill ri-3x"></i>
-                        </div>
-                        <p class="text-sm font-medium">Netflix</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Achievements -->
-    <section class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Journey</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto">From humble beginnings to regional champions, follow our path of growth and innovation.</p>
-            </div>
-
-            <div class="relative">
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-primary/20"></div>
-                
-                <div class="space-y-12">
-                    <div class="relative">
-                        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white"></div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div class="md:text-right md:pr-12">
-                                <h3 class="text-xl font-bold text-primary mb-2">2018</h3>
-                                <h4 class="text-lg font-semibold mb-2">Team Founded</h4>
-                                <p class="text-gray-600">Started with just 12 students and 2 mentors, participating in our first regional competition.</p>
-                            </div>
-                            <div class="md:pl-12">
-                                <img src="https://public.readdy.ai/ai/img_res/3b39dfb130c755c5efd27fa34f2ab628.jpg" alt="Team Founded" class="w-full h-auto rounded-lg shadow-sm object-cover object-top">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative">
-                        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white"></div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div class="md:order-2 md:text-left md:pl-12">
-                                <h3 class="text-xl font-bold text-primary mb-2">2020</h3>
-                                <h4 class="text-lg font-semibold mb-2">First Major Award</h4>
-                                <p class="text-gray-600">Won the Rookie All-Star Award at the Pacific Northwest Regional, qualifying for the World Championship.</p>
-                            </div>
-                            <div class="md:order-1 md:pr-12">
-                                <img src="https://public.readdy.ai/ai/img_res/8c31e7757f0b065f25246f636ab36b93.jpg" alt="First Major Award" class="w-full h-auto rounded-lg shadow-sm object-cover object-top">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative">
-                        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white"></div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div class="md:text-right md:pr-12">
-                                <h3 class="text-xl font-bold text-primary mb-2">2022</h3>
-                                <h4 class="text-lg font-semibold mb-2">Team Expansion</h4>
-                                <p class="text-gray-600">Grew to 25 members and secured our first major corporate sponsorship, allowing us to build a more advanced robot.</p>
-                            </div>
-                            <div class="md:pl-12">
-                                <img src="https://public.readdy.ai/ai/img_res/5e1c1939041837dfee2f14e0f99e13e7.jpg" alt="Team Expansion" class="w-full h-auto rounded-lg shadow-sm object-cover object-top">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative">
-                        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-primary border-4 border-white"></div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                            <div class="md:order-2 md:text-left md:pl-12">
-                                <h3 class="text-xl font-bold text-primary mb-2">2024</h3>
-                                <h4 class="text-lg font-semibold mb-2">Regional Champions</h4>
-                                <p class="text-gray-600">Won the Pacific Northwest Regional Championship and the Excellence in Engineering Award, showcasing our team's growth and technical expertise.</p>
-                            </div>
-                            <div class="md:order-1 md:pr-12">
-                                <img src="https://public.readdy.ai/ai/img_res/d94a6fa60b363a5aa57e78c714d70a96.jpg" alt="Regional Champions" class="w-full h-auto rounded-lg shadow-sm object-cover object-top">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our Sponsors Say</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto">Hear from the organizations that have supported our journey and witnessed our growth.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-gray-50 p-8 rounded-lg shadow-sm">
-                    <div class="text-primary mb-4">
-                        <i class="ri-double-quotes-l ri-3x"></i>
-                    </div>
-                    <p class="text-gray-700 mb-6">"Supporting RoboSchoolies has been incredibly rewarding. Seeing these students develop technical skills and leadership abilities gives us confidence in the future of engineering."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full mr-4 text-gray-700">
-                            <i class="ri-microsoft-fill ri-lg"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Sarah Johnson</h4>
-                            <p class="text-gray-600 text-sm">Community Outreach Director, Microsoft</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 p-8 rounded-lg shadow-sm">
-                    <div class="text-primary mb-4">
-                        <i class="ri-double-quotes-l ri-3x"></i>
-                    </div>
-                    <p class="text-gray-700 mb-6">"The innovation and problem-solving skills displayed by the RoboSchoolies team are exactly what we look for in future employees. Our partnership has been mutually beneficial."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full mr-4 text-gray-700">
-                            <i class="ri-google-fill ri-lg"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Michael Chen</h4>
-                            <p class="text-gray-600 text-sm">Engineering Manager, Google</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 p-8 rounded-lg shadow-sm">
-                    <div class="text-primary mb-4">
-                        <i class="ri-double-quotes-l ri-3x"></i>
-                    </div>
-                    <p class="text-gray-700 mb-6">"We've been sponsoring RoboSchoolies for three years now, and we're consistently impressed by their growth, dedication, and the professional way they represent themselves."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full mr-4 text-gray-700">
-                            <i class="ri-amazon-fill ri-lg"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold">Emily Rodriguez</h4>
-                            <p class="text-gray-600 text-sm">STEM Education Lead, Amazon</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto">Interested in sponsoring our team, mentoring students, or learning more about what we do? We'd love to hear from you!</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <div>
-                    <form class="bg-white p-8 rounded-lg shadow-sm">
-                        <div class="mb-6">
-                            <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Your name">
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary focus:ring-1 focus:ring-primary" placeholder="your.email@example.com">
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
-                            <select id="subject" class="w-full px-4 py-3 pr-8 border border-gray-300 rounded focus:border-primary focus:ring-1 focus:ring-primary appearance-none bg-white">
-                                <option value="">Select a subject</option>
-                                <option value="sponsorship">Sponsorship Inquiry</option>
-                                <option value="mentoring">Mentoring Opportunity</option>
-                                <option value="joining">Joining the Team</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Your message here..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-primary/90 transition whitespace-nowrap">Send Message</button>
-                    </form>
-                </div>
-                
-                <div class="space-y-8">
-                    <div>
-                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4 mt-1">
-                                    <i class="ri-map-pin-line ri-lg"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Our Location</h4>
-                                    <p class="text-gray-600">Westview High School<br>1500 NW 185th Ave<br>Portland, OR 97229</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4 mt-1">
-                                    <i class="ri-mail-line ri-lg"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Email Us</h4>
-                                    <p class="text-gray-600">info@roboschoolies.org</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full text-primary mr-4 mt-1">
-                                    <i class="ri-phone-line ri-lg"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Call Us</h4>
-                                    <p class="text-gray-600">(503) 555-0198</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-2xl font-bold mb-6">Follow Us</h3>
-                        
-                        <div class="flex space-x-4">
-                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition">
-                                <i class="ri-facebook-fill ri-lg"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition">
-                                <i class="ri-twitter-x-fill ri-lg"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition">
-                                <i class="ri-instagram-fill ri-lg"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition">
-                                <i class="ri-youtube-fill ri-lg"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-full text-primary hover:bg-primary hover:text-white transition">
-                                <i class="ri-linkedin-fill ri-lg"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <h3 class="text-2xl font-bold mb-6">Our Location</h3>
-                        <div class="w-full h-64 rounded-lg overflow-hidden shadow-sm" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png'); background-size: cover; background-position: center;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter -->
-    <section class="py-16 bg-primary">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">Stay Updated</h2>
-                <p class="text-white/80 mb-8">Subscribe to our newsletter to receive updates on our team's progress, upcoming events, and opportunities to get involved.</p>
-                
-                <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-                    <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-lg rounded-r-lg sm:rounded-r-none border-none focus:ring-2 focus:ring-white/30">
-                    <button type="submit" class="bg-white text-primary px-6 py-3 rounded-l-lg rounded-r-lg sm:rounded-l-none font-medium hover:bg-white/90 transition whitespace-nowrap !rounded-button">Subscribe</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <a href="#" class="text-2xl font-['Pacifico'] text-white mb-4 inline-block">RoboSchoolies</a>
-                    <p class="text-gray-400 mb-6">Inspiring the next generation of engineers, programmers, and innovators through competitive robotics.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-                            <i class="ri-facebook-fill ri-lg"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-                            <i class="ri-twitter-x-fill ri-lg"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-                            <i class="ri-instagram-fill ri-lg"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition">
-                            <i class="ri-youtube-fill ri-lg"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
-                        <li><a href="#robots" class="text-gray-400 hover:text-white transition">Our Robots</a></li>
-                        <li><a href="#sponsors" class="text-gray-400 hover:text-white transition">Sponsors</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">FIRST Robotics</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Team Calendar</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Photo Gallery</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Team Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Outreach Programs</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-2 mt-0.5">
-                                <i class="ri-map-pin-line"></i>
-                            </div>
-                            <span class="text-gray-400">Westview High School<br>1500 NW 185th Ave<br>Portland, OR 97229</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-2 mt-0.5">
-                                <i class="ri-mail-line"></i>
-                            </div>
-                            <span class="text-gray-400">info@roboschoolies.org</span>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-2 mt-0.5">
-                                <i class="ri-phone-line"></i>
-                            </div>
-                            <span class="text-gray-400">(503) 555-0198</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 RoboSchoolies. All rights reserved.</p>
-                
-                <div class="flex items-center space-x-4">
-                    <a href="#" class="flex items-center text-gray-400 hover:text-white transition">
-                        <i class="ri-first-line ri-lg mr-2"></i>
-                        <span>FIRST Robotics</span>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Counter animation
-        const counters = document.querySelectorAll('.counter-value');
-        
-        counters.forEach(counter => {
-            const target = parseInt(counter.innerText);
-            const duration = 2000;
-            const step = target / (duration / 16);
-            let current = 0;
-            
-            const updateCounter = () => {
-                current += step;
-                if (current < target) {
-                    counter.innerText = Math.floor(current);
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            
-            const observer = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting) {
-                    updateCounter();
-                    observer.disconnect();
-                }
-            }, { threshold: 0.5 });
-            
-            observer.observe(counter);
-        });
-    </script>
+<body class="bg-white min-h-screen">
+<!-- Header -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="container mx-auto px-4 py-3 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<div class="starling-logo"></div>
+<span class="text-xl font-semibold font-['Pacifico']">United Federation of Starlings</span>
+</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a href="#" class="text-primary font-medium hover:text-secondary transition-colors">Home</a>
+<a href="#bank" class="text-gray-600 font-medium hover:text-secondary transition-colors">Bank of Starling</a>
+<a href="#sss" class="text-gray-600 font-medium hover:text-secondary transition-colors">Starling Secret Service</a>
+<a href="#" class="text-gray-600 font-medium hover:text-secondary transition-colors">About</a>
+<a href="#" class="text-gray-600 font-medium hover:text-secondary transition-colors">Contact</a>
+</nav>
+<div class="flex items-center space-x-4">
+<div class="relative">
+<button class="flex items-center text-gray-600 hover:text-primary transition-colors">
+<span>EN</span>
+<div class="w-6 h-6 flex items-center justify-center ml-1">
+<i class="ri-arrow-down-s-line"></i>
+</div>
+</button>
+</div>
+<div class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary transition-colors cursor-pointer">
+<i class="ri-search-line"></i>
+</div>
+<button class="hidden md:block bg-secondary text-white px-4 py-2 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">
+Sign In
+</button>
+<div class="md:hidden w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary transition-colors cursor-pointer">
+<i class="ri-menu-line"></i>
+</div>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative bg-cover bg-center py-20" style="background-image: url('https://readdy.ai/api/search-image?query=A%20majestic%20flock%20of%20starling%20birds%20in%20murmuration%20against%20a%20soft%20blue%20sky%20with%20golden%20sunset%20light%2C%20creating%20beautiful%20patterns.%20The%20image%20has%20a%20light%20gradient%20on%20the%20left%20side%20transitioning%20to%20clearer%20view%20of%20birds%20on%20the%20right%2C%20perfect%20for%20text%20overlay%20on%20the%20left%20side.%20Professional%20nature%20photography%20with%20high%20detail%20of%20the%20birds%20in%20flight.&width=1600&height=800&seq=1&orientation=landscape');">
+<div class="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+<div class="container mx-auto px-4 relative z-10">
+<div class="max-w-2xl">
+<h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary">United Federation of Starlings</h1>
+<p class="text-lg md:text-xl text-gray-700 mb-8">Uniting resources, protecting interests, and fostering prosperity across our federation since 1982. Together we soar higher.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-white px-6 py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">
+Explore Services
+</button>
+<button class="bg-white text-primary border border-primary px-6 py-3 !rounded-button font-medium hover:bg-gray-50 transition-colors whitespace-nowrap">
+Learn More
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Services Section -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-primary mb-4">Our Key Institutions</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">The United Federation of Starlings provides essential services through our specialized institutions, ensuring stability and security for all citizens.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<!-- Bank of Starling Card -->
+<div id="bank" class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+<div class="h-64 bg-cover bg-center" style="background-image: url('https://readdy.ai/api/search-image?query=A%20professional%20and%20elegant%20banking%20hall%20with%20subtle%20blue%20tones%2C%20showing%20a%20modern%20financial%20institution%20with%20clean%20design.%20The%20image%20features%20a%20spacious%20interior%20with%20banking%20counters%2C%20digital%20displays%20showing%20financial%20information%2C%20and%20subtle%20starling%20bird%20motifs%20in%20the%20architecture.%20The%20lighting%20is%20bright%20and%20professional%2C%20creating%20a%20trustworthy%20atmosphere%20for%20financial%20services.&width=800&height=400&seq=2&orientation=landscape');"></div>
+<div class="p-6">
+<div class="flex items-center mb-4">
+<div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white mr-3">
+<i class="ri-bank-line ri-lg"></i>
+</div>
+<h3 class="text-2xl font-bold text-primary">Bank of Starling</h3>
+</div>
+<p class="text-gray-600 mb-6">The central financial institution of our federation, providing economic stability, secure banking services, and financial guidance for all citizens and businesses.</p>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-gray-50 p-4 rounded">
+<p class="text-sm text-gray-500">Interest Rate</p>
+<p class="text-xl font-semibold text-primary">3.75%</p>
+</div>
+<div class="bg-gray-50 p-4 rounded">
+<p class="text-sm text-gray-500">Exchange Rate</p>
+<p class="text-xl font-semibold text-primary">1 STR = 10000 USD</p>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">
+Access Banking Services
+</button>
+</div>
+</div>
+<!-- Starling Secret Service Card -->
+<div id="sss" class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02]">
+<div class="h-64 bg-cover bg-center" style="background-image: url('https://readdy.ai/api/search-image?query=A%20sophisticated%20and%20mysterious%20intelligence%20agency%20headquarters%20with%20subtle%20dark%20blue%20and%20gray%20tones.%20The%20image%20shows%20a%20high-tech%20security%20operations%20center%20with%20multiple%20screens%20displaying%20data%2C%20maps%2C%20and%20surveillance%20footage.%20There%20are%20silhouettes%20of%20personnel%20working%20at%20stations%2C%20with%20subtle%20starling%20bird%20emblems%20visible%20on%20walls%20or%20screens.%20The%20lighting%20is%20dramatic%20with%20blue%20highlights%2C%20creating%20a%20secretive%20and%20secure%20atmosphere.&width=800&height=400&seq=3&orientation=landscape');"></div>
+<div class="p-6">
+<div class="flex items-center mb-4">
+<div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white mr-3">
+<i class="ri-shield-keyhole-line ri-lg"></i>
+</div>
+<h3 class="text-2xl font-bold text-primary">Starling Secret Service (SSS)</h3>
+</div>
+<p class="text-gray-600 mb-6">Our elite intelligence and security agency, protecting the federation's interests, conducting covert operations, and ensuring national security.</p>
+<div class="bg-gray-50 p-4 rounded mb-6">
+<div class="flex items-center justify-between mb-2">
+<p class="text-sm text-gray-500">Security Level</p>
+<div class="flex">
+<div class="w-3 h-3 bg-green-500 rounded-full mr-1"></div>
+<div class="w-3 h-3 bg-green-500 rounded-full mr-1"></div>
+<div class="w-3 h-3 bg-green-500 rounded-full mr-1"></div>
+<div class="w-3 h-3 bg-green-500 rounded-full mr-1"></div>
+<div class="w-3 h-3 bg-green-500 rounded-full"></div>
+</div>
+</div>
+<p class="text-sm text-gray-600">Current threat assessment: <span class="font-medium text-yellow-600">MODERATE</span></p>
+</div>
+<button class="w-full bg-primary text-white py-3 !rounded-button font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">
+Secure Portal Access
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bank of Starling Section -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="flex flex-col md:flex-row items-center justify-between mb-12">
+<div>
+<h2 class="text-3xl font-bold text-primary mb-4">Bank of Starling</h2>
+<p class="text-gray-600 max-w-2xl">Ensuring financial stability and prosperity across the federation through innovative banking solutions and economic guidance.</p>
+</div>
+<div class="mt-6 md:mt-0">
+<button class="bg-white text-primary border border-primary px-6 py-2 !rounded-button font-medium hover:bg-gray-50 transition-colors whitespace-nowrap">
+Annual Report
+</button>
+</div>
+</div>
+<!-- Banking Services -->
+<div class="grid md:grid-cols-3 gap-6 mb-12">
+<div class="bg-gray-50 rounded-lg p-6 transition-transform hover:scale-[1.02]">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-primary rounded-full mb-4">
+<i class="ri-user-star-line ri-lg"></i>
+</div>
+<h3 class="text-xl font-bold text-primary mb-2">Personal Banking</h3>
+<p class="text-gray-600 mb-4">Comprehensive personal banking services including savings, checking, loans, and investment options for all federation citizens.</p>
+<a href="#" class="text-primary font-medium flex items-center hover:text-secondary transition-colors">
+Learn more
+<div class="w-5 h-5 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</a>
+</div>
+<div class="bg-gray-50 rounded-lg p-6 transition-transform hover:scale-[1.02]">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-primary rounded-full mb-4">
+<i class="ri-building-line ri-lg"></i>
+</div>
+<h3 class="text-xl font-bold text-primary mb-2">Business Banking</h3>
+<p class="text-gray-600 mb-4">Specialized services for businesses of all sizes, including commercial loans, merchant services, and trade financing.</p>
+<a href="#" class="text-primary font-medium flex items-center hover:text-secondary transition-colors">
+Learn more
+<div class="w-5 h-5 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</a>
+</div>
+<div class="bg-gray-50 rounded-lg p-6 transition-transform hover:scale-[1.02]">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-primary rounded-full mb-4">
+<i class="ri-global-line ri-lg"></i>
+</div>
+<h3 class="text-xl font-bold text-primary mb-2">International Banking</h3>
+<p class="text-gray-600 mb-4">Facilitating global transactions, foreign exchange services, and international investment opportunities for our citizens.</p>
+<a href="#" class="text-primary font-medium flex items-center hover:text-secondary transition-colors">
+Learn more
+<div class="w-5 h-5 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</a>
+</div>
+</div>
+<!-- Economic Dashboard -->
+<div class="bg-white rounded-lg shadow-md p-6 mb-12">
+<h3 class="text-xl font-bold text-primary mb-6">Economic Dashboard</h3>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h4 class="text-lg font-medium text-gray-700 mb-4">Federation Economic Indicators</h4>
+<div class="h-64" id="economicChart"></div>
+</div>
+<div>
+<h4 class="text-lg font-medium text-gray-700 mb-4">Currency Exchange Rates</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-money-dollar-circle-line"></i>
+</div>
+<span class="font-medium">USD/STR</span>
+</div>
+<div class="flex items-center">
+<span class="font-semibold">2.45</span>
+<div class="w-6 h-6 flex items-center justify-center text-green-500 ml-2">
+<i class="ri-arrow-up-s-line"></i>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-money-euro-circle-line"></i>
+</div>
+<span class="font-medium">EUR/STR</span>
+</div>
+<div class="flex items-center">
+<span class="font-semibold">2.25</span>
+<div class="w-6 h-6 flex items-center justify-center text-green-500 ml-2">
+<i class="ri-arrow-up-s-line"></i>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-money-pound-circle-line"></i>
+</div>
+<span class="font-medium">GBP/STR</span>
+</div>
+<div class="flex items-center">
+<span class="font-semibold">1.92</span>
+<div class="w-6 h-6 flex items-center justify-center text-red-500 ml-2">
+<i class="ri-arrow-down-s-line"></i>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+<div class="flex items-center">
+<div class="w-8 h-8 flex items-center justify-center bg-blue-100 rounded-full mr-3">
+<i class="ri-money-yen-circle-line"></i>
+</div>
+<span class="font-medium">JPY/STR</span>
+</div>
+<div class="flex items-center">
+<span class="font-semibold">348.75</span>
+<div class="w-6 h-6 flex items-center justify-center text-green-500 ml-2">
+<i class="ri-arrow-up-s-line"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Starling Secret Service Section -->
+<section class="py-16 bg-gray-900 text-white">
+<div class="container mx-auto px-4">
+<div class="flex flex-col md:flex-row items-center justify-between mb-12">
+<div>
+<h2 class="text-3xl font-bold mb-4">Starling Secret Service (SSS)</h2>
+<p class="text-gray-300 max-w-2xl">Protecting the federation's interests through intelligence gathering, counterintelligence, and covert operations.</p>
+</div>
+<div class="mt-6 md:mt-0 flex items-center">
+<div class="w-3 h-3 bg-red-500 rounded-full animate-pulse mr-2"></div>
+<span class="text-sm font-medium text-red-400">LIVE SECURITY STATUS</span>
+</div>
+</div>
+<!-- Security Dashboard -->
+<div class="bg-gray-800 rounded-lg p-6 mb-12">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold">Security Dashboard</h3>
+<div class="flex items-center space-x-4">
+<div class="flex items-center">
+<div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+<span class="text-sm text-gray-300">Systems Operational</span>
+</div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
+<span class="text-sm text-gray-300">Alert Level: Moderate</span>
+</div>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h4 class="text-lg font-medium text-gray-300 mb-4">Threat Assessment</h4>
+<div class="h-64" id="threatChart"></div>
+</div>
+<div>
+<h4 class="text-lg font-medium text-gray-300 mb-4">Recent Intelligence Reports</h4>
+<div class="space-y-4">
+<div class="bg-gray-700 p-4 rounded">
+<div class="flex justify-between items-start mb-2">
+<h5 class="font-medium">Operation Nightwatch</h5>
+<span class="text-xs bg-green-800 text-green-300 px-2 py-1 rounded">COMPLETED</span>
+</div>
+<p class="text-sm text-gray-300 mb-2">Surveillance operation in Eastern Sector completed successfully. <span class="bg-gray-900 px-1">██████████</span> secured.</p>
+<div class="flex justify-between text-xs text-gray-400">
+<span>Agent: R. Blackwood</span>
+<span>05/15/2025</span>
+</div>
+</div>
+<div class="bg-gray-700 p-4 rounded">
+<div class="flex justify-between items-start mb-2">
+<h5 class="font-medium">Operation Skyfall</h5>
+<span class="text-xs bg-yellow-800 text-yellow-300 px-2 py-1 rounded">IN PROGRESS</span>
+</div>
+<p class="text-sm text-gray-300 mb-2">Counterintelligence measures deployed against <span class="bg-gray-900 px-1">██████████</span> activities in Northern Region.</p>
+<div class="flex justify-between text-xs text-gray-400">
+<span>Agent: E. Mercer</span>
+<span>05/17/2025</span>
+</div>
+</div>
+<div class="bg-gray-700 p-4 rounded">
+<div class="flex justify-between items-start mb-2">
+<h5 class="font-medium">Operation Darkwing</h5>
+<span class="text-xs bg-blue-800 text-blue-300 px-2 py-1 rounded">PLANNED</span>
+</div>
+<p class="text-sm text-gray-300 mb-2">Intelligence gathering mission scheduled for <span class="bg-gray-900 px-1">██████████</span>. Team briefing pending.</p>
+<div class="flex justify-between text-xs text-gray-400">
+<span>Agent: J. Harlow</span>
+<span>05/20/2025</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid md:grid-cols-1 gap-8 mb-12">
+<div class="bg-gray-800 rounded-lg p-6">
+<h3 class="text-xl font-bold mb-4">Field Agent Recruitment</h3>
+<p class="text-gray-300 mb-6">The Starling Secret Service is seeking exceptional individuals with specialized skills to join our elite team.</p>
+<div class="space-y-4 mb-6">
+<div class="bg-gray-700 p-4 rounded">
+<h4 class="font-medium mb-2">Intelligence Analyst</h4>
+<p class="text-sm text-gray-300 mb-2">Seeking individuals with strong analytical skills, pattern recognition abilities, and expertise in data interpretation.</p>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="text-xs bg-gray-600 px-2 py-1 rounded">Data Analysis</span>
+<span class="text-xs bg-gray-600 px-2 py-1 rounded">Cryptography</span>
+<span class="text-xs bg-gray-600 px-2 py-1 rounded">Foreign Languages</span>
+</div>
+</div>
+<div class="bg-gray-700 p-4 rounded">
+<h4 class="font-medium mb-2">Field Operative</h4>
+<p class="text-sm text-gray-300 mb-2">Seeking individuals with exceptional physical capabilities, adaptability, and the ability to operate in high-pressure environments.</p>
+<div class="flex flex-wrap gap-2 mt-3">
+<span class="text-xs bg-gray-600 px-2 py-1 rounded">Covert Operations</span>
+<span class="text-xs bg-gray-600 px-2 py-1 rounded">Surveillance</span>
+<span class="text-xs bg-gray-600 px-2 py-1 rounded">Combat Training</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
+<span class="text-sm text-gray-300">Strict vetting process applies</span>
+</div>
+<button class="bg-gray-700 text-white px-4 py-2 !rounded-button font-medium hover:bg-gray-600 transition-colors whitespace-nowrap">
+Apply Now
+</button>
+</div>
+</div>
+</div>
+<!-- Security Map -->
+<div class="bg-gray-800 rounded-lg overflow-hidden">
+<div class="p-6">
+<h3 class="text-xl font-bold mb-4">Federation Security Map</h3>
+<p class="text-gray-300 mb-6">Current security status across federation territories. Updated in real-time based on intelligence reports.</p>
+</div>
+<div class="h-96 relative bg-cover bg-center" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png');">
+<div class="absolute inset-0 bg-black bg-opacity-30"></div>
+<div class="absolute top-4 left-4 bg-gray-900 bg-opacity-80 p-3 rounded">
+<div class="flex items-center space-x-4">
+<div class="flex items-center">
+<div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+<span class="text-xs text-gray-300">Secure</span>
+</div>
+<div class="flex items-center">
+<div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+<span class="text-xs text-gray-300">Alert</span>
+</div>
+<div class="flex items-center">
+<div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+<span class="text-xs text-gray-300">Threat</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 text-xs text-white bg-gray-900 bg-opacity-80 px-2 py-1 rounded">
+Last updated: 17 May 2025, 14:32 UTC
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Statistics Section -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-primary mb-4">Federation Statistics</h2>
+<p class="text-gray-600 max-w-3xl mx-auto">Key metrics showcasing the strength and stability of the United Federation of Starlings.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+<div class="bg-white p-6 rounded-lg shadow-sm text-center">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-primary rounded-full mx-auto mb-4">
+<i class="ri-user-line ri-lg"></i>
+</div>
+<h3 class="text-4xl font-bold text-primary mb-2">42.3M</h3>
+<p class="text-gray-600">Federation Citizens</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm text-center">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-primary rounded-full mx-auto mb-4">
+<i class="ri-map-pin-line ri-lg"></i>
+</div>
+<h3 class="text-4xl font-bold text-primary mb-2">12</h3>
+<p class="text-gray-600">Member Territories</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm text-center">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-primary rounded-full mx-auto mb-4">
+<i class="ri-bank-line ri-lg"></i>
+</div>
+<h3 class="text-4xl font-bold text-primary mb-2">$100T</h3>
+<p class="text-gray-600">GDP</p>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-sm text-center">
+<div class="w-12 h-12 flex items-center justify-center bg-blue-100 text-primary rounded-full mx-auto mb-4">
+<i class="ri-shield-check-line ri-lg"></i>
+</div>
+<h3 class="text-4xl font-bold text-primary mb-2">98.7%</h3>
+<p class="text-gray-600">Security Rating</p>
+</div>
+</div>
+<div class="bg-white rounded-lg shadow-md p-6">
+<h3 class="text-xl font-bold text-primary mb-6">Economic Growth Trends</h3>
+<div class="h-80" id="growthChart"></div>
+</div>
+</div>
+</section>
+<!-- Newsletter Section -->
+<!-- Footer -->
+<footer class="bg-gray-900 text-white pt-16 pb-8">
+<div class="container mx-auto px-4">
+<div class="grid md:grid-cols-4 gap-8 mb-12">
+<div>
+<div class="flex items-center space-x-2 mb-6">
+<div class="starling-logo bg-white"></div>
+<span class="text-xl font-semibold font-['Pacifico'] text-white">United Federation of Starlings</span>
+</div>
+<p class="text-gray-400 mb-6">United Federation of Starlings, established 1982. Uniting resources, protecting interests, and fostering prosperity.</p>
+<div class="flex space-x-4">
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700 transition-colors">
+<i class="ri-twitter-x-line"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700 transition-colors">
+<i class="ri-facebook-fill"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700 transition-colors">
+<i class="ri-instagram-line"></i>
+</a>
+<a href="#" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700 transition-colors">
+<i class="ri-linkedin-fill"></i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-6">Quick Links</h4>
+<ul class="space-y-3">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+<li><a href="#bank" class="text-gray-400 hover:text-white transition-colors">Bank of Starling</a></li>
+<li><a href="#sss" class="text-gray-400 hover:text-white transition-colors">Starling Secret Service</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Careers</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-6">Services</h4>
+<ul class="space-y-3">
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Personal Banking</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Business Banking</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">International Banking</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Security Services</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Intelligence Reports</a></li>
+<li><a href="#" class="text-gray-400 hover:text-white transition-colors">Citizen Services</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-6">Contact Information</h4>
+<ul class="space-y-3">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3 mt-1">
+<i class="ri-map-pin-line"></i>
+</div>
+<span class="text-gray-400">Federation Headquarters<br>1234 Starling Avenue<br>Capital City, SF 56789</span>
+</li>
+<li class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3">
+<i class="ri-phone-line"></i>
+</div>
+<span class="text-gray-400">+1 (555) 123-4567</span>
+</li>
+<li class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3">
+<i class="ri-mail-line"></i>
+</div>
+<span class="text-gray-400">info@starlingfed.gov</span>
+</li>
+<li class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-gray-400 mr-3">
+<i class="ri-time-line"></i>
+</div>
+<span class="text-gray-400">Mon-Fri: 8:00 AM - 5:00 PM</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-500 text-sm mb-4 md:mb-0">&copy; 2025 United Federation of Starlings. All rights reserved.</p>
+<div class="flex flex-wrap justify-center gap-4">
+<a href="#" class="text-gray-500 text-sm hover:text-white transition-colors">Privacy Policy</a>
+<a href="#" class="text-gray-500 text-sm hover:text-white transition-colors">Terms of Service</a>
+<a href="#" class="text-gray-500 text-sm hover:text-white transition-colors">Cookie Policy</a>
+<a href="#" class="text-gray-500 text-sm hover:text-white transition-colors">Accessibility</a>
+</div>
+</div>
+<div class="flex flex-wrap justify-center gap-6 mt-6">
+<div class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-visa-line ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-mastercard-line ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-paypal-line ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-apple-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center text-gray-500">
+<i class="ri-google-fill ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Economic Chart
+const economicChart = echarts.init(document.getElementById('economicChart'));
+const economicOption = {
+animation: false,
+tooltip: {
+trigger: 'axis',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+textStyle: {
+color: '#1f2937'
+}
+},
+legend: {
+data: ['GDP Growth', 'Inflation Rate'],
+textStyle: {
+color: '#1f2937'
+}
+},
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+boundaryGap: false,
+data: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025'],
+axisLine: {
+lineStyle: {
+color: '#1f2937'
+}
+}
+},
+yAxis: {
+type: 'value',
+axisLine: {
+lineStyle: {
+color: '#1f2937'
+}
+},
+splitLine: {
+lineStyle: {
+color: '#e5e7eb'
+}
+}
+},
+series: [
+{
+name: 'GDP Growth',
+type: 'line',
+smooth: true,
+lineStyle: {
+width: 3,
+color: 'rgba(87, 181, 231, 1)'
+},
+areaStyle: {
+color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+{
+offset: 0,
+color: 'rgba(87, 181, 231, 0.3)'
+},
+{
+offset: 1,
+color: 'rgba(87, 181, 231, 0.1)'
+}
+])
+},
+emphasis: {
+focus: 'series'
+},
+data: [3.2, 3.4, 3.8, 4.1, 4.3]
+},
+{
+name: 'Inflation Rate',
+type: 'line',
+smooth: true,
+lineStyle: {
+width: 3,
+color: 'rgba(141, 211, 199, 1)'
+},
+areaStyle: {
+color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+{
+offset: 0,
+color: 'rgba(141, 211, 199, 0.3)'
+},
+{
+offset: 1,
+color: 'rgba(141, 211, 199, 0.1)'
+}
+])
+},
+emphasis: {
+focus: 'series'
+},
+data: [2.1, 2.3, 2.2, 2.0, 1.8]
+}
+]
+};
+economicChart.setOption(economicOption);
+// Threat Chart
+const threatChart = echarts.init(document.getElementById('threatChart'));
+const threatOption = {
+animation: false,
+tooltip: {
+trigger: 'item',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+textStyle: {
+color: '#1f2937'
+}
+},
+legend: {
+orient: 'vertical',
+right: 10,
+top: 'center',
+textStyle: {
+color: '#d1d5db'
+}
+},
+series: [
+{
+name: 'Threat Sources',
+type: 'pie',
+radius: ['40%', '70%'],
+avoidLabelOverlap: false,
+itemStyle: {
+borderRadius: 10,
+borderColor: '#1f2937',
+borderWidth: 2
+},
+label: {
+show: false,
+position: 'center'
+},
+emphasis: {
+label: {
+show: true,
+fontSize: 16,
+fontWeight: 'bold',
+color: '#d1d5db'
+}
+},
+labelLine: {
+show: false
+},
+data: [
+{ value: 35, name: 'Cyber Threats', itemStyle: { color: 'rgba(87, 181, 231, 1)' } },
+{ value: 25, name: 'Foreign Intelligence', itemStyle: { color: 'rgba(141, 211, 199, 1)' } },
+{ value: 20, name: 'Domestic Extremism', itemStyle: { color: 'rgba(251, 191, 114, 1)' } },
+{ value: 15, name: 'Economic Espionage', itemStyle: { color: 'rgba(252, 141, 98, 1)' } },
+{ value: 5, name: 'Other', itemStyle: { color: 'rgba(179, 179, 179, 1)' } }
+]
+}
+]
+};
+threatChart.setOption(threatOption);
+// Growth Chart
+const growthChart = echarts.init(document.getElementById('growthChart'));
+const growthOption = {
+animation: false,
+tooltip: {
+trigger: 'axis',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+textStyle: {
+color: '#1f2937'
+}
+},
+legend: {
+data: ['GDP Growth', 'Banking Assets', 'Foreign Investment', 'Security Spending'],
+textStyle: {
+color: '#1f2937'
+}
+},
+grid: {
+left: '3%',
+right: '4%',
+bottom: '3%',
+containLabel: true
+},
+xAxis: {
+type: 'category',
+boundaryGap: true,
+data: ['2020', '2021', '2022', '2023', '2024', '2025 (Proj.)'],
+axisLine: {
+lineStyle: {
+color: '#1f2937'
+}
+}
+},
+yAxis: {
+type: 'value',
+axisLine: {
+lineStyle: {
+color: '#1f2937'
+}
+},
+splitLine: {
+lineStyle: {
+color: '#e5e7eb'
+}
+}
+},
+series: [
+{
+name: 'GDP Growth',
+type: 'bar',
+barWidth: '15%',
+itemStyle: {
+color: 'rgba(87, 181, 231, 1)',
+borderRadius: [4, 4, 0, 0]
+},
+emphasis: {
+focus: 'series'
+},
+data: [5.2, 7.8, 12.5, 18.2, 25.1, 32.5]
+},
+{
+name: 'Banking Assets',
+type: 'bar',
+barWidth: '15%',
+itemStyle: {
+color: 'rgba(141, 211, 199, 1)',
+borderRadius: [4, 4, 0, 0]
+},
+emphasis: {
+focus: 'series'
+},
+data: [6.5, 9.2, 15.9, 22.5, 28.2, 35.8]
+},
+{
+name: 'Foreign Investment',
+type: 'bar',
+barWidth: '15%',
+itemStyle: {
+color: 'rgba(251, 191, 114, 1)',
+borderRadius: [4, 4, 0, 0]
+},
+emphasis: {
+focus: 'series'
+},
+data: [4.8, 8.5, 14.2, 20.0, 27.8, 34.2]
+},
+{
+name: 'Security Spending',
+type: 'bar',
+barWidth: '15%',
+itemStyle: {
+color: 'rgba(252, 141, 98, 1)',
+borderRadius: [4, 4, 0, 0]
+},
+emphasis: {
+focus: 'series'
+},
+data: [5.5, 8.7, 13.0, 19.4, 26.9, 33.3]
+}
+]
+};
+growthChart.setOption(growthOption);
+// Responsive charts
+window.addEventListener('resize', function() {
+economicChart.resize();
+threatChart.resize();
+growthChart.resize();
+});
+});
+// Password visibility toggle
+document.addEventListener('DOMContentLoaded', function() {
+const passwordToggle = document.querySelector('.ri-eye-off-line');
+const passwordInput = document.getElementById('password');
+if (passwordToggle && passwordInput) {
+passwordToggle.addEventListener('click', function() {
+if (passwordInput.type === 'password') {
+passwordInput.type = 'text';
+this.classList.remove('ri-eye-off-line');
+this.classList.add('ri-eye-line');
+} else {
+passwordInput.type = 'password';
+this.classList.remove('ri-eye-line');
+this.classList.add('ri-eye-off-line');
+}
+});
+}
+});
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+const menuButton = document.querySelector('.ri-menu-line');
+if (menuButton) {
+menuButton.addEventListener('click', function() {
+// Mobile menu logic would go here
+alert('Mobile menu functionality would be implemented here');
+});
+}
+});
+</script>
 </body>
 </html>
