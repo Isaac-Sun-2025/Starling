@@ -13,6 +13,11 @@
 <script src="https://cdn.tailwindcss.com/3.4.16"></script>
 <script>tailwind.config={theme:{extend:{colors:{primary:'#2C3E50',secondary:'#FFB74D'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
 <style>
+
+#content {
+    display: none; /* hide content initially */
+  }
+
 :where([class^="ri-"])::before { content: "\f3c2"; }
 body {
 font-family: 'Roboto', sans-serif;
@@ -172,21 +177,6 @@ top: 3px;
   </div>
   
 <div id="content">
-
-  <script>
-    const correctPassword = 'I love starlings'; // Change this to your desired password
-
-    function checkPassword() {
-      const input = document.getElementById('password-input').value;
-      if (input === correctPassword) {
-        document.getElementById('password-prompt').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
-      } else {
-        const errorMsg = document.getElementById('error-msg');
-        errorMsg.style.display = 'block';
-      }
-    }
-  </script>
   
 <!-- Header -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
@@ -1024,5 +1014,19 @@ alert('Mobile menu functionality would be implemented here');
 }
 });
 </script>
+    <script>
+    const correctPassword = 'I love starlings'; // Change this to your desired password
+
+    function checkPassword() {
+      const input = document.getElementById('password-input').value;
+      if (input === correctPassword) {
+        document.getElementById('password-prompt').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+      } else {
+        const errorMsg = document.getElementById('error-msg');
+        errorMsg.style.display = 'block';
+      }
+    }
+  </script>
 </body>
 </html>
