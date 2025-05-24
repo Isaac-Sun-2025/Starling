@@ -164,6 +164,30 @@ top: 3px;
 </style>
 </head>
 <body class="bg-white min-h-screen">
+  <div id="password-prompt">
+    <h2>Please enter the password to continue:</h2>
+    <input type="password" id="password-input" />
+    <button onclick="checkPassword()">Submit</button>
+    <p id="error-msg" style="color:red; display:none;">Incorrect password, try again.</p>
+  </div>
+  
+<div id="content">
+
+  <script>
+    const correctPassword = 'I love starlings'; // Change this to your desired password
+
+    function checkPassword() {
+      const input = document.getElementById('password-input').value;
+      if (input === correctPassword) {
+        document.getElementById('password-prompt').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+      } else {
+        const errorMsg = document.getElementById('error-msg');
+        errorMsg.style.display = 'block';
+      }
+    }
+  </script>
+  
 <!-- Header -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
 <div class="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -697,6 +721,7 @@ Last updated: 17 May 2025, 14:32 UTC
 </div>
 <div class="w-8 h-8 flex items-center justify-center text-gray-500">
 <i class="ri-google-fill ri-lg"></i>
+</div>
 </div>
 </div>
 </div>
